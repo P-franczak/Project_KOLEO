@@ -196,6 +196,43 @@ lista_sasiedztwa[Stacja.Kraków_Bronowice].append(
 )
 lista_sasiedztwa[Stacja.Kraków_Łobzów].append([Stacja.Kraków_Główny, "30753", "04:53"])
 
+# Pociąg 3
+lista_sasiedztwa[Stacja.Oświęcim].append(
+    [Stacja.Gorzów_Chrzanowski, "30754/5", "04:19"]
+)
+lista_sasiedztwa[Stacja.Gorzów_Chrzanowski].append([Stacja.Chełmek, "30754/5", "04:24"])
+lista_sasiedztwa[Stacja.Chełmek].append([Stacja.Libiąż, "30754/5", "04:27"])
+lista_sasiedztwa[Stacja.Libiąż].append([Stacja.Chrzanów, "30754/5", "04:32"])
+lista_sasiedztwa[Stacja.Chrzanów].append(
+    [Stacja.Chrzanów_Śródmieście, "30754/5", "04:37"]
+)
+lista_sasiedztwa[Stacja.Chrzanów_Śródmieście].append(
+    [Stacja.Trzebinia, "30754/5", "04:39"]
+)
+lista_sasiedztwa[Stacja.Trzebinia].append([Stacja.Dulowa, "30754/5", "04:43"])
+lista_sasiedztwa[Stacja.Dulowa].append([Stacja.Wola_Filipowska, "30754/5", "04:48"])
+lista_sasiedztwa[Stacja.Wola_Filipowska].append(
+    [Stacja.Krzeszowice, "30754/5", "04:51"]
+)
+lista_sasiedztwa[Stacja.Krzeszowice].append([Stacja.Rudawa, "30754/5", "04:55"])
+lista_sasiedztwa[Stacja.Rudawa].append([Stacja.Zabierzów, "30754/5", "05:00"])
+lista_sasiedztwa[Stacja.Zabierzów].append([Stacja.Zabierzów_Rząska, "30754/5", "05:05"])
+lista_sasiedztwa[Stacja.Zabierzów_Rząska].append([
+        Stacja.Kraków_Mydlniki_Wapiennik, "30754/5","05:08"]
+)
+lista_sasiedztwa[Stacja.Kraków_Mydlniki_Wapiennik].append([
+        Stacja.Kraków_Mydlniki,"30754/5", "05:11",]
+)
+lista_sasiedztwa[Stacja.Kraków_Mydlniki].append(
+    [Stacja.Kraków_Bronowice, "30754/5", "05:13"]
+)
+lista_sasiedztwa[Stacja.Kraków_Bronowice].append(
+    [Stacja.Kraków_Łobzów, "30754/5", "05:15"]
+)
+lista_sasiedztwa[Stacja.Kraków_Łobzów].append(
+    [Stacja.Kraków_Główny, "30754/5", "05:18"]
+)
+
 # Pociąg 4
 lista_sasiedztwa[Stacja.Katowice].append([Stacja.Katowice_Zawodzie, "43300/1", "04:31"])
 lista_sasiedztwa[Stacja.Katowice_Zawodzie].append(
@@ -256,6 +293,61 @@ lista_sasiedztwa[Stacja.Kraków_Łobzów].append(
     [Stacja.Kraków_Główny, "43300/1", "05:48"]
 )
 
+# Pociąg 6
+lista_sasiedztwa[Stacja.Oświęcim].append(
+    [Stacja.Gorzów_Chrzanowski, "30756/7", "05:00"]
+)
+lista_sasiedztwa[Stacja.Gorzów_Chrzanowski].append([Stacja.Chełmek, "30756/7", "05:06"])
+lista_sasiedztwa[Stacja.Chełmek].append([Stacja.Libiąż, "30756/7", "05:09"])
+lista_sasiedztwa[Stacja.Libiąż].append([Stacja.Chrzanów, "30756/7", "05:15"])
+lista_sasiedztwa[Stacja.Chrzanów].append(
+    [Stacja.Chrzanów_Śródmieście, "30756/7", "05:20"]
+)
+lista_sasiedztwa[Stacja.Chrzanów_Śródmieście].append(
+    [Stacja.Trzebinia, "30756/7", "05:22"]
+)
+lista_sasiedztwa[Stacja.Trzebinia].append([Stacja.Dulowa, "30756/7", "05:27"])
+lista_sasiedztwa[Stacja.Dulowa].append([Stacja.Wola_Filipowska, "30756/7", "05:32"])
+lista_sasiedztwa[Stacja.Wola_Filipowska].append(
+    [Stacja.Krzeszowice, "30756/7", "05:36"]
+)
+lista_sasiedztwa[Stacja.Krzeszowice].append([Stacja.Rudawa, "30756/7", "05:40"])
+lista_sasiedztwa[Stacja.Rudawa].append([Stacja.Zabierzów, "30756/7", "05:46"])
+lista_sasiedztwa[Stacja.Zabierzów].append([Stacja.Zabierzów_Rząska, "30756/7", "05:51"])
+lista_sasiedztwa[Stacja.Zabierzów_Rząska].append([
+        Stacja.Kraków_Mydlniki_Wapiennik, "30756/7","05:54"]
+)
+lista_sasiedztwa[Stacja.Kraków_Mydlniki_Wapiennik].append([
+        Stacja.Kraków_Mydlniki,"30756/7", "05:57",]
+)
+lista_sasiedztwa[Stacja.Kraków_Mydlniki].append(
+    [Stacja.Kraków_Bronowice, "30756/7", "06:00"]
+)
+lista_sasiedztwa[Stacja.Kraków_Bronowice].append(
+    [Stacja.Kraków_Łobzów, "30756/7", "06:03"]
+)
+lista_sasiedztwa[Stacja.Kraków_Łobzów].append(
+    [Stacja.Kraków_Główny, "30756/7", "06:05"]
+)
+
+# Pociąg 8
+lista_sasiedztwa[Stacja.Wolbrom].append(
+    [Stacja.Olkusz, "33139", "04:28"]
+)
+lista_sasiedztwa[Stacja.Olkusz].append([Stacja.Bukowno, "33139", "04:53"])
+lista_sasiedztwa[Stacja.Bukowno].append([Stacja.Jaworzno_Szczakowa, "33139", "05:03"])
+lista_sasiedztwa[Stacja.Jaworzno_Szczakowa].append([Stacja.Trzebinia, "33139", "05:19"])
+lista_sasiedztwa[Stacja.Trzebinia].append(
+    [Stacja.Krzeszowice, "33139", "05:33"]
+)
+lista_sasiedztwa[Stacja.Krzeszowice].append(
+    [Stacja.Zabierzów, "33139", "05:42"]
+)
+lista_sasiedztwa[Stacja.Zabierzów].append([Stacja.Kraków_Bronowice, "33139", "05:55"])
+lista_sasiedztwa[Stacja.Kraków_Bronowice].append([Stacja.Kraków_Łobzów, "33139", "06:02"])
+lista_sasiedztwa[Stacja.Kraków_Łobzów].append(
+    [Stacja.Kraków_Główny, "33139", "06:09"]
+)
 
 # Pociąg 9
 lista_sasiedztwa[Stacja.Oświęcim].append(
