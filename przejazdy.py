@@ -1,5 +1,6 @@
 from enum import Enum
-
+from datetime import datetime, timedelta
+import math
 
 lista_stacji = [
     "Wolbrom",
@@ -541,3 +542,81 @@ lista_sasiedztwa[Stacja.Brzeszcze].append([Stacja.Olkusz, "43528", "07:01"])
 
 
 print(lista_sasiedztwa[Stacja.Balin])
+
+import math
+
+graph = [
+    [0, 5, 8, 3, 0, 0, 0, 0, 0, 4],
+    [5, 0, 6, 0, 7, 0, 0, 0, 0, 0],
+    [8, 6, 0, 2, 4, 9, 0, 0, 0, 0],
+    [3, 0, 2, 0, 0, 1, 5, 0, 0, 0],
+    [0, 7, 4, 0, 0, 3, 2, 6, 0, 0],
+    [0, 0, 9, 1, 3, 0, 0, 0, 4, 0],
+    [0, 0, 0, 5, 2, 0, 0, 3, 7, 0],
+    [0, 0, 0, 0, 6, 0, 3, 0, 2, 5],
+    [0, 0, 0, 0, 0, 4, 7, 2, 0, 8],
+    [4, 0, 0, 0, 0, 0, 0, 5, 8, 0],
+]  # Słownik grafu
+
+adj_list = [
+    list([i if vertice[i] else math.inf for i in range(0, len(vertice))])
+    for vertice in graph
+]  # Lista sąsiedzctwa każdego wierzchołka
+
+for x in adj_list:
+    while math.inf in x:
+        x.remove(math.inf)
+
+
+# Funkcja zwracająca wagę krawędzi pomiędzy podanymi wierzchołkami. Jeśli nie ma krawędzi zwróci inf
+def weight(v1, v2):
+    return graph[v1][v2] if graph[v1][v2] else math.inf
+
+def parse_time(time_str):
+    return timedelta(hours=int(time_str.split(":")[0]), minutes=int(time_str.split(":")[1]))
+
+def dijkstra_train_schedule(graph, start_station, target_station):
+    distances = {station: timedelta.max for station in graph}
+    previous = {station: None for station in graph}
+    distances[start_station] = parse_time("00:00")  # Start at midnight or any reference time
+    unvisited = set(graph.keys())
+    
+    while unvisited:
+        # Find the station with the smallest distance
+        current_station = min(unvisited, key=lambda station: distances[station])
+        unvisited.remove(current_station)
+
+        # If we reached the target, break
+        if current_station == target_station:
+            break
+
+        # Check all neighbors of the current station
+        for neighbor, train_number, departure_time in graph[current_station]:
+            departure = parse_time(departure_time)
+            travel_time = timedelta(minutes=5)  # Example: fixed travel time between stations
+            arrival_time = max(departure, distances[current_station]) + travel_time
+
+            # Update the shortest path if a quicker route is found
+            if arrival_time < distances[neighbor]:
+                distances[neighbor] = arrival_time
+                previous[neighbor] = (current_station, train_number, departure_time)
+
+    # Reconstruct the shortest path
+    path = []
+    current = target_station
+    while current:
+        if previous[current]:
+            path.append((current, *previous[current]))
+        current = previous[current][0] if previous[current] else None
+
+    path.reverse()
+    return path, distances[target_station]
+
+
+start = Stacja.Oświęcim
+end = Stacja.Kraków_Główny
+path, arrival_time = dijkstra_train_schedule(lista_sasiedztwa, start, end)
+
+print("Najkrótsza trasa:", path)
+print("Czas dotarcia:", arrival_time)
+
