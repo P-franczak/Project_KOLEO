@@ -615,12 +615,12 @@ def dijkstra_train_schedule(graph, start_station, target_station, curr_time="00:
         current = previous[current][0] if previous[current] else None
 
     path.reverse()
-    return path, distances[target_station], distances
+    return path, distances[target_station]
 
 
 start = Stacja.Oświęcim
 end = Stacja.Kraków_Główny
-path, arrival_time, dist = dijkstra_train_schedule(lista_sasiedztwa, start, end)
+path, arrival_time = dijkstra_train_schedule(lista_sasiedztwa, start, end)
 
 print("Najkrótsza trasa:", path)
 print("Czas dotarcia:", arrival_time)
