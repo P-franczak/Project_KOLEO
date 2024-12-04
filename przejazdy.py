@@ -123,7 +123,6 @@ lista_sasiedztwa = {
     Stacja.Dębica: [],
 }
 
-print(lista_sasiedztwa[Stacja.Balin])
 # stacja z której odjazd = [stacja do której jedzie, numer pociągu, godzina odjazdu]
 
 # Pociąg 1
@@ -218,11 +217,15 @@ lista_sasiedztwa[Stacja.Wola_Filipowska].append(
 lista_sasiedztwa[Stacja.Krzeszowice].append([Stacja.Rudawa, "30754/5", "04:55"])
 lista_sasiedztwa[Stacja.Rudawa].append([Stacja.Zabierzów, "30754/5", "05:00"])
 lista_sasiedztwa[Stacja.Zabierzów].append([Stacja.Zabierzów_Rząska, "30754/5", "05:05"])
-lista_sasiedztwa[Stacja.Zabierzów_Rząska].append([
-        Stacja.Kraków_Mydlniki_Wapiennik, "30754/5","05:08"]
+lista_sasiedztwa[Stacja.Zabierzów_Rząska].append(
+    [Stacja.Kraków_Mydlniki_Wapiennik, "30754/5", "05:08"]
 )
-lista_sasiedztwa[Stacja.Kraków_Mydlniki_Wapiennik].append([
-        Stacja.Kraków_Mydlniki,"30754/5", "05:11",]
+lista_sasiedztwa[Stacja.Kraków_Mydlniki_Wapiennik].append(
+    [
+        Stacja.Kraków_Mydlniki,
+        "30754/5",
+        "05:11",
+    ]
 )
 lista_sasiedztwa[Stacja.Kraków_Mydlniki].append(
     [Stacja.Kraków_Bronowice, "30754/5", "05:13"]
@@ -294,7 +297,7 @@ lista_sasiedztwa[Stacja.Kraków_Łobzów].append(
     [Stacja.Kraków_Główny, "43300/1", "05:48"]
 )
 
-# Pociąg 6
+# Pociąg 5
 lista_sasiedztwa[Stacja.Oświęcim].append(
     [Stacja.Gorzów_Chrzanowski, "30756/7", "05:00"]
 )
@@ -315,11 +318,15 @@ lista_sasiedztwa[Stacja.Wola_Filipowska].append(
 lista_sasiedztwa[Stacja.Krzeszowice].append([Stacja.Rudawa, "30756/7", "05:40"])
 lista_sasiedztwa[Stacja.Rudawa].append([Stacja.Zabierzów, "30756/7", "05:46"])
 lista_sasiedztwa[Stacja.Zabierzów].append([Stacja.Zabierzów_Rząska, "30756/7", "05:51"])
-lista_sasiedztwa[Stacja.Zabierzów_Rząska].append([
-        Stacja.Kraków_Mydlniki_Wapiennik, "30756/7","05:54"]
+lista_sasiedztwa[Stacja.Zabierzów_Rząska].append(
+    [Stacja.Kraków_Mydlniki_Wapiennik, "30756/7", "05:54"]
 )
-lista_sasiedztwa[Stacja.Kraków_Mydlniki_Wapiennik].append([
-        Stacja.Kraków_Mydlniki,"30756/7", "05:57",]
+lista_sasiedztwa[Stacja.Kraków_Mydlniki_Wapiennik].append(
+    [
+        Stacja.Kraków_Mydlniki,
+        "30756/7",
+        "05:57",
+    ]
 )
 lista_sasiedztwa[Stacja.Kraków_Mydlniki].append(
     [Stacja.Kraków_Bronowice, "30756/7", "06:00"]
@@ -331,26 +338,20 @@ lista_sasiedztwa[Stacja.Kraków_Łobzów].append(
     [Stacja.Kraków_Główny, "30756/7", "06:05"]
 )
 
-# Pociąg 8
-lista_sasiedztwa[Stacja.Wolbrom].append(
-    [Stacja.Olkusz, "33139", "04:28"]
-)
+# Pociąg 6
+lista_sasiedztwa[Stacja.Wolbrom].append([Stacja.Olkusz, "33139", "04:28"])
 lista_sasiedztwa[Stacja.Olkusz].append([Stacja.Bukowno, "33139", "04:53"])
 lista_sasiedztwa[Stacja.Bukowno].append([Stacja.Jaworzno_Szczakowa, "33139", "05:03"])
 lista_sasiedztwa[Stacja.Jaworzno_Szczakowa].append([Stacja.Trzebinia, "33139", "05:19"])
-lista_sasiedztwa[Stacja.Trzebinia].append(
-    [Stacja.Krzeszowice, "33139", "05:33"]
-)
-lista_sasiedztwa[Stacja.Krzeszowice].append(
-    [Stacja.Zabierzów, "33139", "05:42"]
-)
+lista_sasiedztwa[Stacja.Trzebinia].append([Stacja.Krzeszowice, "33139", "05:33"])
+lista_sasiedztwa[Stacja.Krzeszowice].append([Stacja.Zabierzów, "33139", "05:42"])
 lista_sasiedztwa[Stacja.Zabierzów].append([Stacja.Kraków_Bronowice, "33139", "05:55"])
-lista_sasiedztwa[Stacja.Kraków_Bronowice].append([Stacja.Kraków_Łobzów, "33139", "06:02"])
-lista_sasiedztwa[Stacja.Kraków_Łobzów].append(
-    [Stacja.Kraków_Główny, "33139", "06:09"]
+lista_sasiedztwa[Stacja.Kraków_Bronowice].append(
+    [Stacja.Kraków_Łobzów, "33139", "06:02"]
 )
+lista_sasiedztwa[Stacja.Kraków_Łobzów].append([Stacja.Kraków_Główny, "33139", "06:09"])
 
-# Pociąg 9
+# Pociąg 7
 lista_sasiedztwa[Stacja.Oświęcim].append(
     [Stacja.Gorzów_Chrzanowski, "30758/9", "06:19"]
 )
@@ -396,7 +397,7 @@ lista_sasiedztwa[Stacja.Kraków_Łobzów].append(
 )
 
 
-# Pociąg 10
+# Pociąg 8
 lista_sasiedztwa[Stacja.Katowice].append([Stacja.Katowice_Zawodzie, "43800/1", "06:04"])
 lista_sasiedztwa[Stacja.Katowice_Zawodzie].append(
     [
@@ -460,7 +461,7 @@ lista_sasiedztwa[Stacja.Kraków_Płaszów].append([Stacja.Tarnów, "43800/1", "0
 lista_sasiedztwa[Stacja.Tarnów].append([Stacja.Dębica, "43800/1", "08:49"])
 
 
-# Pociąg 11
+# Pociąg 9
 lista_sasiedztwa[Stacja.Wolbrom].append([Stacja.Olkusz, "33141", "06:04"])
 lista_sasiedztwa[Stacja.Olkusz].append([Stacja.Bukowno, "33141", "06:04"])
 lista_sasiedztwa[Stacja.Bukowno].append([Stacja.Jaworzno_Szczakowa, "33141", "06:04"])
@@ -474,7 +475,7 @@ lista_sasiedztwa[Stacja.Kraków_Bronowice].append(
 lista_sasiedztwa[Stacja.Kraków_Łobzów].append([Stacja.Kraków_Główny, "33141", "06:04"])
 
 
-# Pociąg 12
+# Pociąg 10
 lista_sasiedztwa[Stacja.Katowice].append([Stacja.Katowice_Zawodzie, "43100/1", "06:23"])
 lista_sasiedztwa[Stacja.Katowice_Zawodzie].append(
     [
@@ -514,7 +515,7 @@ lista_sasiedztwa[Stacja.Kraków_Łobzów].append(
 )
 
 
-# Pociąg 13
+# Pociąg 11
 lista_sasiedztwa[Stacja.Wolbrom].append([Stacja.Olkusz, "33143", "06:33"])
 lista_sasiedztwa[Stacja.Olkusz].append([Stacja.Bukowno, "33143", "06:58"])
 lista_sasiedztwa[Stacja.Bukowno].append([Stacja.Jaworzno_Szczakowa, "33143", "07:07"])
@@ -528,7 +529,7 @@ lista_sasiedztwa[Stacja.Kraków_Bronowice].append(
 lista_sasiedztwa[Stacja.Kraków_Łobzów].append([Stacja.Kraków_Główny, "33143", "08:07"])
 
 
-# Pociąg 14
+# Pociąg 12
 lista_sasiedztwa[Stacja.Czechowice_Dziedzice].append([Stacja.Kaniów, "43528", "06:40"])
 lista_sasiedztwa[Stacja.Kaniów].append([Stacja.Dankowice, "43528", "06:45"])
 lista_sasiedztwa[Stacja.Dankowice].append([Stacja.Jawiszowice_Jaźnik, "43528", "06:49"])
@@ -540,10 +541,6 @@ lista_sasiedztwa[Stacja.Brzeszce_Jawiszowice].append(
 )
 lista_sasiedztwa[Stacja.Brzeszcze].append([Stacja.Olkusz, "43528", "07:01"])
 
-
-print(lista_sasiedztwa[Stacja.Balin])
-
-import math
 
 graph = [
     [0, 5, 8, 3, 0, 0, 0, 0, 0, 4],
@@ -572,15 +569,21 @@ for x in adj_list:
 def weight(v1, v2):
     return graph[v1][v2] if graph[v1][v2] else math.inf
 
-def parse_time(time_str):
-    return timedelta(hours=int(time_str.split(":")[0]), minutes=int(time_str.split(":")[1]))
 
-def dijkstra_train_schedule(graph, start_station, target_station):
+def parse_time(time_str):
+    return timedelta(
+        hours=int(time_str.split(":")[0]), minutes=int(time_str.split(":")[1])
+    )
+
+
+def dijkstra_train_schedule(graph, start_station, target_station, curr_time="00:00"):
     distances = {station: timedelta.max for station in graph}
     previous = {station: None for station in graph}
-    distances[start_station] = parse_time("00:00")  # Start at midnight or any reference time
+    distances[start_station] = parse_time(
+        curr_time
+    )  # Start at midnight or any reference time
     unvisited = set(graph.keys())
-    
+
     while unvisited:
         # Find the station with the smallest distance
         current_station = min(unvisited, key=lambda station: distances[station])
@@ -593,7 +596,9 @@ def dijkstra_train_schedule(graph, start_station, target_station):
         # Check all neighbors of the current station
         for neighbor, train_number, departure_time in graph[current_station]:
             departure = parse_time(departure_time)
-            travel_time = timedelta(minutes=5)  #fixed travel time between stations
+            travel_time = timedelta(
+                minutes=5
+            ) #fixed travel time between stations
             arrival_time = max(departure, distances[current_station]) + travel_time
 
             # Update the shortest path if a quicker route is found
