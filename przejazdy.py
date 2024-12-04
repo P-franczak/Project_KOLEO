@@ -593,7 +593,7 @@ def dijkstra_train_schedule(graph, start_station, target_station):
         # Check all neighbors of the current station
         for neighbor, train_number, departure_time in graph[current_station]:
             departure = parse_time(departure_time)
-            travel_time = timedelta(minutes=5)  # Example: fixed travel time between stations
+            travel_time = timedelta(minutes=5)  #fixed travel time between stations
             arrival_time = max(departure, distances[current_station]) + travel_time
 
             # Update the shortest path if a quicker route is found
