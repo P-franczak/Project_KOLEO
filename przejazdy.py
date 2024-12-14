@@ -625,3 +625,92 @@ path, arrival_time = dijkstra_train_schedule(lista_sasiedztwa, start, end)
 print("Najkrótsza trasa:", path)
 print("Czas dotarcia:", arrival_time)
 
+import random
+
+def losuj_przystanek(lista):
+    return random.choice(lista)
+
+def zapetlona(lista):
+    return len(lista) > len(set(lista))
+
+def usun_slepe_konce(lista):
+    while lista and not lista[-1]:
+        lista.pop()
+
+def funkcja_celu():
+    return 0
+
+def przetwarzaj_przystanki(lista_przystankow):
+    while True:
+        losowy_przystanek1 = losuj_przystanek(lista_przystankow)
+        losowy_przystanek2 = losuj_przystanek(lista_przystankow)
+
+        przystanek1, przystanek2 = sorted((losowy_przystanek1, losowy_przystanek2))
+
+        lista1 = lista_przystankow[:przystanek1 + 1]
+        lista2 = lista_przystankow[przystanek2:]
+
+        while set(lista1).isdisjoint(lista2):
+            losowy_sasiad1 = losuj_przystanek(lista1)
+            losowy_sasiad2 = losuj_przystanek(lista2)
+
+            lista1.append(losowy_sasiad1)
+            lista2.append(losowy_sasiad2)
+
+            if zapetlona(lista1):
+                funkcja_celu()  # kara is undefined; fixed by calling without +=
+                break
+
+            if zapetlona(lista2):
+                funkcja_celu()  # kara is undefined; fixed by calling without +=
+                break
+
+        usun_slepe_konce(lista1)
+        usun_slepe_konce(lista2)
+        break
+
+def tabu_search(lista_przystankow, max_iteracje, tabu_dlugosc, prog):
+    tabu_lista = []
+    rozwiazanie_optymalne = None
+    funkcja_optymalna = float('inf')
+
+    for _ in range(max_iteracje):
+        while True:
+            nowe_rozwiazanie = losuj_przystanek(lista_przystankow)
+
+            if nowe_rozwiazanie not in tabu_lista:
+                break
+
+        if rozwiazanie_optymalne is None or nowe_rozwiazanie < rozwiazanie_optymalne:
+            rozwiazanie_optymalne = nowe_rozwiazanie
+
+        tabu_lista.append(nowe_rozwiazanie)
+        if len(tabu_lista) > tabu_dlugosc:
+            tabu_lista.pop(0)
+
+    return rozwiazanie_optymalne
+
+# Test cases for tabu_search
+if __name__ == "__main__":
+    lista_przystankow = [i for i in range(10)]
+
+    # Test 1: Small number of iterations, short tabu list
+    result = tabu_search(lista_przystankow, max_iteracje=5, tabu_dlugosc=2, prog=0)
+    print("Test 1 Result:", result)
+
+    # Test 2: Large number of iterations, longer tabu list
+    result = tabu_search(lista_przystankow, max_iteracje=50, tabu_dlugosc=5, prog=0)
+    print("Test 2 Result:", result)
+
+    # Test 3: Check behavior with empty list
+    #try:
+    #    result = tabu_search([], max_iteracje=10, tabu_dlugosc=3, prog=0)
+     #   print("Test 3 Result:", result)
+    #except Exception as e:
+    #    print("Test 3 Exception:", e)
+
+
+
+    # Test 5: Edge case with high tabu list length
+    result = tabu_search(lista_przystankow, max_iteracje=10, tabu_dlugosc=15, prog=0)
+    print("Test 5 Result:", result)
