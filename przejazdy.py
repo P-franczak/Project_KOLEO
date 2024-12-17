@@ -542,32 +542,9 @@ lista_sasiedztwa[Stacja.Brzeszce_Jawiszowice].append(
 lista_sasiedztwa[Stacja.Brzeszcze].append([Stacja.Olkusz, "43528", "07:01"])
 
 
-graph = [
-    [0, 5, 8, 3, 0, 0, 0, 0, 0, 4],
-    [5, 0, 6, 0, 7, 0, 0, 0, 0, 0],
-    [8, 6, 0, 2, 4, 9, 0, 0, 0, 0],
-    [3, 0, 2, 0, 0, 1, 5, 0, 0, 0],
-    [0, 7, 4, 0, 0, 3, 2, 6, 0, 0],
-    [0, 0, 9, 1, 3, 0, 0, 0, 4, 0],
-    [0, 0, 0, 5, 2, 0, 0, 3, 7, 0],
-    [0, 0, 0, 0, 6, 0, 3, 0, 2, 5],
-    [0, 0, 0, 0, 0, 4, 7, 2, 0, 8],
-    [4, 0, 0, 0, 0, 0, 0, 5, 8, 0],
-]  # Słownik grafu
-
-adj_list = [
-    list([i if vertice[i] else math.inf for i in range(0, len(vertice))])
-    for vertice in graph
-]  # Lista sąsiedzctwa każdego wierzchołka
-
-for x in adj_list:
-    while math.inf in x:
-        x.remove(math.inf)
-
-
-# Funkcja zwracająca wagę krawędzi pomiędzy podanymi wierzchołkami. Jeśli nie ma krawędzi zwróci inf
-def weight(v1, v2):
-    return graph[v1][v2] if graph[v1][v2] else math.inf
+# # Funkcja zwracająca wagę krawędzi pomiędzy podanymi wierzchołkami. Jeśli nie ma krawędzi zwróci inf
+# def weight(v1, v2):
+#     return graph[v1][v2] if graph[v1][v2] else math.inf
 
 
 def parse_time(time_str):
@@ -618,12 +595,12 @@ def dijkstra_train_schedule(graph, start_station, target_station, curr_time="00:
     return path, distances[target_station]
 
 
-start = Stacja.Oświęcim
-end = Stacja.Kraków_Główny
-path, arrival_time = dijkstra_train_schedule(lista_sasiedztwa, start, end)
+# start = Stacja.Oświęcim
+# end = Stacja.Kraków_Główny
+# path, arrival_time = dijkstra_train_schedule(lista_sasiedztwa, start, end)
 
-print("Najkrótsza trasa:", path)
-print("Czas dotarcia:", arrival_time)
+# print("Najkrótsza trasa:", path)
+# print("Czas dotarcia:", arrival_time)
 
 import random
 
@@ -691,26 +668,17 @@ def tabu_search(lista_przystankow, max_iteracje, tabu_dlugosc, prog):
     return rozwiazanie_optymalne
 
 # Test cases for tabu_search
-if __name__ == "__main__":
-    lista_przystankow = [i for i in range(10)]
+# if __name__ == "__main__":
+#     lista_przystankow = [i for i in range(10)]
 
-    # Test 1: Small number of iterations, short tabu list
-    result = tabu_search(lista_przystankow, max_iteracje=5, tabu_dlugosc=2, prog=0)
-    print("Test 1 Result:", result)
+#     # Test 1: Small number of iterations, short tabu list
+#     result = tabu_search(lista_przystankow, max_iteracje=5, tabu_dlugosc=2, prog=0)
+#     print("Test 1 Result:", result)
 
-    # Test 2: Large number of iterations, longer tabu list
-    result = tabu_search(lista_przystankow, max_iteracje=50, tabu_dlugosc=5, prog=0)
-    print("Test 2 Result:", result)
+#     # Test 2: Large number of iterations, longer tabu list
+#     result = tabu_search(lista_przystankow, max_iteracje=50, tabu_dlugosc=5, prog=0)
+#     print("Test 2 Result:", result)
 
-    # Test 3: Check behavior with empty list
-    #try:
-    #    result = tabu_search([], max_iteracje=10, tabu_dlugosc=3, prog=0)
-     #   print("Test 3 Result:", result)
-    #except Exception as e:
-    #    print("Test 3 Exception:", e)
-
-
-
-    # Test 5: Edge case with high tabu list length
-    result = tabu_search(lista_przystankow, max_iteracje=10, tabu_dlugosc=15, prog=0)
-    print("Test 5 Result:", result)
+#     # Test 5: Edge case with high tabu list length
+#     result = tabu_search(lista_przystankow, max_iteracje=10, tabu_dlugosc=15, prog=0)
+#     print("Test 5 Result:", result)
