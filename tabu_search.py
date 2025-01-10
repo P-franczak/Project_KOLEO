@@ -1,6 +1,8 @@
 import random
-import przejazdy
+import matplotlib.pyplot as plt
 from collections import deque
+
+import przejazdy
 
 
 # Funkcja celu: minimalizacja czasu podróży i liczby przesiadek
@@ -213,22 +215,48 @@ def tabu_search(
     najlepsze_rozwiazanie = rozwiazanie_startowe
     aktualne_rozwiazanie = rozwiazanie_startowe
     lista_tabu = deque(maxlen=dlugosc_tabu)
+    iteracje_bez_poprawy = 0
+    aspiracja_iter = 10  # Kryterium aspiracji
+    
+    # Lista do przechowywania wartości funkcji celu najlepszego rozwiązania
+    historia_funkcji_celu = []
 
     for _ in range(max_iter):
         sasiedztwo = generuj_sasiedztwo(aktualne_rozwiazanie, lista_sasiedztwa)
         # print(sasiedztwo, funkcja_celu(sasiedztwo), '\n', '=======')
 
         if sasiedztwo in lista_tabu:
-            continue
+            iteracje_bez_poprawy += 1
+            if iteracje_bez_poprawy > aspiracja_iter:
+                print('kryterium aspiracji')
+                # Kryterium aspiracji
+                sasiedztwo = min(lista_tabu, key=funkcja_celu)
+                iteracje_bez_poprawy = 0
+        else:
+            iteracje_bez_poprawy = 0
 
         if funkcja_celu(sasiedztwo) < funkcja_celu(najlepsze_rozwiazanie):
             najlepsze_rozwiazanie = sasiedztwo
 
         lista_tabu.append(sasiedztwo)
         aktualne_rozwiazanie = sasiedztwo
+        
+        # Zapisz wartość funkcji celu najlepszego rozwiązania w tej iteracji
+        historia_funkcji_celu.append(funkcja_celu(najlepsze_rozwiazanie))
 
+    # Tworzenie wykresu
+    plt.figure(figsize=(10, 6))
+    plt.plot(range(max_iter), historia_funkcji_celu, marker='o', linestyle='-', color='b')
+    plt.title("Wartość funkcji celu najlepszego rozwiązania w każdej iteracji")
+    plt.xlabel("Numer iteracji")
+    plt.ylabel("Wartość funkcji celu")
+    plt.grid(True)
+    plt.show()
+    
     print(start, funkcja_celu(start), "\n")
     return najlepsze_rozwiazanie
+
+
 
 
 # Przykładowa baza danych
