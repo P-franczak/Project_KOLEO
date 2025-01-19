@@ -2,7 +2,7 @@ import random
 import matplotlib.pyplot as plt
 from collections import deque
 
-import przejazdy
+from polaczone import lista_sasiedztwa_enum
 
 
 # Funkcja celu: minimalizacja czasu podróży i liczby przesiadek
@@ -11,7 +11,7 @@ def funkcja_celu(trasa):
     liczba_przesiadek = sum(
         1 for i in range(1, len(trasa)) if trasa[i][3] != trasa[i - 1][3]
     )  # zmiana numeru pociągu
-    return czas_podrozy + liczba_przesiadek * 10  # Przesiadki mają większą wagę
+    return 0.2 * czas_podrozy + liczba_przesiadek  # Przesiadki mają większą wagę
 
 
 # Szukanie rozwiązania startowego
@@ -217,7 +217,7 @@ def tabu_search(
     lista_tabu = deque(maxlen=dlugosc_tabu)
     iteracje_bez_poprawy = 0
     aspiracja_iter = 10  # Kryterium aspiracji
-    
+
     # Lista do przechowywania wartości funkcji celu najlepszego rozwiązania
     historia_funkcji_celu = []
 
@@ -228,7 +228,7 @@ def tabu_search(
         if sasiedztwo in lista_tabu:
             iteracje_bez_poprawy += 1
             if iteracje_bez_poprawy > aspiracja_iter:
-                print('kryterium aspiracji')
+                print("kryterium aspiracji")
                 # Kryterium aspiracji
                 sasiedztwo = min(lista_tabu, key=funkcja_celu)
                 iteracje_bez_poprawy = 0
@@ -240,23 +240,26 @@ def tabu_search(
 
         lista_tabu.append(sasiedztwo)
         aktualne_rozwiazanie = sasiedztwo
-        
+
         # Zapisz wartość funkcji celu najlepszego rozwiązania w tej iteracji
         historia_funkcji_celu.append(funkcja_celu(najlepsze_rozwiazanie))
 
     # Tworzenie wykresu
     plt.figure(figsize=(10, 6))
-    plt.plot(range(max_iter), historia_funkcji_celu, marker='o', linestyle='-', color='b')
+    plt.plot(
+        range(max_iter), historia_funkcji_celu, marker="o", linestyle="-", color="b"
+    )
     plt.title("Wartość funkcji celu najlepszego rozwiązania w każdej iteracji")
     plt.xlabel("Numer iteracji")
     plt.ylabel("Wartość funkcji celu")
     plt.grid(True)
-    plt.show()
-    
+   
+    # Zapis wykresu do pliku
+    plt.savefig("wykresy/wykres.jpg", format="jpg")
+    plt.close()  # Zamknięcie figury, aby zwolnić zasoby
+
     print(start, funkcja_celu(start), "\n")
     return najlepsze_rozwiazanie
-
-
 
 
 # Przykładowa baza danych
@@ -313,9 +316,9 @@ lista_sasiedztwa = {
 
 
 # Wywołanie algorytmu
-stacja_pocz = "A"
-stacja_konc = "F"
-najlepsza_trasa = tabu_search(stacja_pocz, stacja_konc, lista_sasiedztwa)
+stacja_pocz = "Oświęcim"
+stacja_konc = "Kraków Główny"
+najlepsza_trasa = tabu_search(stacja_pocz, stacja_konc, lista_sasiedztwa_enum)
 
 print(najlepsza_trasa)
 print("Najlepsza trasa:", najlepsza_trasa)
