@@ -67,19 +67,22 @@ class MenuWindow(QWidget):
         maxIter = int(self.maxIter.text())
         tabuLen = int(self.tabuLen.text())
         aspIter = int(self.aspIter.text())
-        finalPath = tabu_search(start, end, lista_sasiedztwa_enum, max_iter=maxIter, dlugosc_tabu=tabuLen, aspiracja_iter = aspIter)
-        # finalPath = tabu_search("Balin", 'Kraków Łobzów', lista_sasiedztwa_enum, max_iter=50, dlugosc_tabu=10, aspiracja_iter = 10)
+        finalPath, finalValue = tabu_search(start, end, lista_sasiedztwa_enum, max_iter=maxIter, dlugosc_tabu=tabuLen, aspiracja_iter = aspIter)
+        #finalPath, finalValue = tabu_search("Balin", 'Kraków Łobzów', lista_sasiedztwa_enum, max_iter=50, dlugosc_tabu=10, aspiracja_iter = 10)
         self.resPath.clear()
-        self.resPath.insertItem(0, '')
-        for row, station in enumerate(finalPath, 1):
+        self.resPath.addItem('')
+        for row, station in enumerate(finalPath):
             item = QListWidgetItem(station[0])
             item.setTextAlignment(Qt.AlignCenter)
-            self.resPath.insertItem(row, item)
-            if station == finalPath[-1]:
-                item = QListWidgetItem(station[1])
-                item.setTextAlignment(Qt.AlignCenter)
-                self.resPath.insertItem(row+1, item)
-
+            self.resPath.addItem(item)
+        item = QListWidgetItem(finalPath[-1][1])
+        item.setTextAlignment(Qt.AlignCenter)
+        self.resPath.addItem(item)
+        self.resPath.addItem('')
+        self.resPath.addItem('')
+        item = QListWidgetItem(f'Wartość funkcji celu: {finalValue}')
+        item.setTextAlignment(Qt.AlignCenter)
+        self.resPath.addItem(item)
 
         resultImage = QPixmap('wykres.jpg')
         self.iterImage.setPixmap(resultImage)
