@@ -63,7 +63,7 @@ def znajdz_rozwiazanie_startowe(stacja_pocz, stacja_konc, lista_sasiedztwa):
             if ostatnia_stacja1 == stacja_konc:
                 lista_stacji = [stacja[0] for stacja in lista1] + [stacja_konc]
                 return lista1, lista_stacji
-        else:
+        elif lista1:
             lista1.pop()
 
         # Rozbudowa lista2 w kierunku "do tyłu"
@@ -89,7 +89,7 @@ def znajdz_rozwiazanie_startowe(stacja_pocz, stacja_konc, lista_sasiedztwa):
             if ostatnia_stacja2 == stacja_pocz:
                 lista_stacji = [stacja[0] for stacja in lista2[::-1]] + [stacja_konc]
                 return lista2[::-1], lista_stacji
-        else:
+        elif lista2:
             lista2.pop()
 
         # Sprawdzenie przecięcia list
@@ -274,16 +274,12 @@ def tabu_search(
     plt.xlabel("Numer iteracji")
     plt.ylabel("Wartość funkcji celu")
     plt.grid(True)
-    plt.show()
+    
+    # Zapis wykresu do pliku
+    plt.savefig("wykresy/wykres.jpg", format="jpg")
+    plt.close()  # Zamknięcie figury, aby zwolnić zasoby
     
     print(start, funkcja_celu(start), "\n")
     return najlepsze_rozwiazanie
 
 lista_sasiedztwa_enum = stworz_format_tabu(baza_danych.lista_sasiedztwa_enum)
-stacja_pocz = "Balin"
-stacja_konc = "Kraków Łobzów"
-najlepsza_trasa = tabu_search(stacja_pocz, stacja_konc, lista_sasiedztwa_enum)
-
-print(najlepsza_trasa)
-print("Najlepsza trasa:", najlepsza_trasa)
-print("Koszt trasy:", funkcja_celu(najlepsza_trasa))
