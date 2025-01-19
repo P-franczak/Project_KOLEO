@@ -104,7 +104,7 @@ def znajdz_rozwiazanie_startowe(stacja_pocz, stacja_konc, lista_sasiedztwa):
             break
 
         if not mozliwi_sasiedzi1 and not mozliwi_sasiedzi2:
-            return []
+            return (0, 0)
 
     przeciecie_stacja = przeciecie.pop()
     idx1 = next(i for i, stacja in enumerate(lista1) if stacja[1] == przeciecie_stacja)
@@ -244,6 +244,8 @@ def tabu_search(
     rozwiazanie_startowe, lista_stacji = znajdz_rozwiazanie_startowe(
         stacja_pocz, stacja_konc, lista_sasiedztwa
     )
+    if not rozwiazanie_startowe and not lista_stacji:
+        return 0
     start = rozwiazanie_startowe
     najlepsze_rozwiazanie = rozwiazanie_startowe
     aktualne_rozwiazanie = rozwiazanie_startowe
