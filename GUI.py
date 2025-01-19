@@ -1,5 +1,5 @@
 from PyQt5.QtGui import QPalette, QColor, QPixmap
-from PyQt5.QtWidgets import QPushButton, QComboBox, QWidget, QLabel, QStackedWidget, QApplication, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QPushButton, QComboBox, QWidget, QLabel, QStackedWidget, QApplication, QHBoxLayout, QVBoxLayout, QListWidget
 from PyQt5.QtCore import Qt, QSize
 from polaczone import tabu_search, lista_sasiedztwa_enum
 import sys
@@ -23,10 +23,10 @@ class MenuWindow(QWidget):
         self.label.setAlignment(Qt.AlignCenter)
 
         self.startPoint = QComboBox(); self.startPoint.addItems(Stacja.__members__.keys())
-        self.startPoint.setStyleSheet('font-size: 15px')
+        self.startPoint.setStyleSheet('font-size: 18px')
         self.startPoint.setMinimumSize(160, 20)
         self.endPoint = QComboBox(); self.endPoint.addItems(Stacja.__members__.keys())  
-        self.endPoint.setStyleSheet('font-size: 15px') 
+        self.endPoint.setStyleSheet('font-size: 18px') 
         self.endPoint.setMinimumSize(160, 20) 
 
         self.b1 = QPushButton('Szukaj'); self.b1.setStyleSheet('font-size: 30px')
@@ -38,13 +38,13 @@ class MenuWindow(QWidget):
         menuLayout.addWidget(self.b1)
 
 
-        self.resPath = QLabel()
+        self.resPath = QListWidget(); self.resPath.setMinimumSize(500, 200)
         self.iterImage = QLabel()
         resultImage = QPixmap('tlo.png')
         self.iterImage.setPixmap(resultImage)
         self.iterImage.setScaledContents(True)
-        resultLayout.addWidget(self.label)
-        resultLayout.addWidget(self.iterImage)
+        resultLayout.addWidget(self.resPath, stretch = 1)
+        resultLayout.addWidget(self.iterImage, stretch = 1)
         
         vertLayout.addLayout(menuLayout)
         vertLayout.addLayout(resultLayout)
