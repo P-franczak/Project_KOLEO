@@ -275,7 +275,7 @@ def tabu_search(
     plt.grid(True)
     
     # Zapis wykresu do pliku
-    plt.savefig("wykresy/wykres.jpg", format="jpg")
+    plt.savefig("wykres.jpg", format="jpg")
     plt.close()  # Zamknięcie figury, aby zwolnić zasoby
     
     print(start, funkcja_celu(start), "\n")
