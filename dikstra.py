@@ -4,6 +4,7 @@ from collections import defaultdict, deque
 from enum import Enum
 import baza_danych
 
+
 def stworz_format_tabu(lista_sasiedztwa_enum):
     """
     Zamienia oryginalny słownik (Stacja -> [[StacjaDocelowa, nr_pociagu, godz_odjazdu], ...])
@@ -14,20 +15,23 @@ def stworz_format_tabu(lista_sasiedztwa_enum):
 
     for stacja_z, edges in lista_sasiedztwa_enum.items():
         stacja_z_str = baza_danych.mapa_stacji[stacja_z]
-        for (stacja_do_enum, nr_pociagu, godz_odjazdu) in edges:
+        for stacja_do_enum, nr_pociagu, godz_odjazdu in edges:
             stacja_do_str = baza_danych.mapa_stacji[stacja_do_enum]
             # Na potrzeby algorytmu przyjmujemy np. stały czas = 5
             czas_przejazdu = 5
 
-            new_lista[stacja_z_str].append([
-                stacja_z_str,      # stacja początkowa (string)
-                stacja_do_str,     # stacja docelowa (string)
-                czas_przejazdu,    # na razie stały
-                nr_pociagu
-            ])
+            new_lista[stacja_z_str].append(
+                [
+                    stacja_z_str,  # stacja początkowa (string)
+                    stacja_do_str,  # stacja docelowa (string)
+                    czas_przejazdu,  # na razie stały
+                    nr_pociagu,
+                ]
+            )
 
     # Konwertuj defaultdict na zwykły dict
     return dict(new_lista)
+
 
 # Funkcja celu: minimalizacja czasu podróży i liczby przesiadek
 def funkcja_celu(trasa):
@@ -63,7 +67,7 @@ def znajdz_rozwiazanie_startowe(stacja_pocz, stacja_konc, lista_sasiedztwa):
             if ostatnia_stacja1 == stacja_konc:
                 lista_stacji = [stacja[0] for stacja in lista1] + [stacja_konc]
                 return lista1, lista_stacji
-        else:
+        elif lista1:
             lista1.pop()
 
         # Rozbudowa lista2 w kierunku "do tyłu"
@@ -89,7 +93,7 @@ def znajdz_rozwiazanie_startowe(stacja_pocz, stacja_konc, lista_sasiedztwa):
             if ostatnia_stacja2 == stacja_pocz:
                 lista_stacji = [stacja[0] for stacja in lista2[::-1]] + [stacja_konc]
                 return lista2[::-1], lista_stacji
-        else:
+        elif lista2:
             lista2.pop()
 
         # Sprawdzenie przecięcia list
@@ -117,6 +121,7 @@ def znajdz_rozwiazanie_startowe(stacja_pocz, stacja_konc, lista_sasiedztwa):
     )
 
     return lista1 + lista2[::-1], lista_stacji
+
 
 def znajdz_pomiedzy(stacja_pocz, stacja_konc, lista_sasiedztwa, odwiedzone=[]):
     lista1 = []  # [stacja z, stacja do, godzina odjazdu, czas jazdy, nr pociągu]
@@ -240,7 +245,7 @@ def tabu_search(
     lista_tabu = deque(maxlen=dlugosc_tabu)
     iteracje_bez_poprawy = 0
     aspiracja_iter = 10  # Kryterium aspiracji
-    
+
     # Lista do przechowywania wartości funkcji celu najlepszego rozwiązania
     historia_funkcji_celu = []
 
@@ -251,7 +256,7 @@ def tabu_search(
         if sasiedztwo in lista_tabu:
             iteracje_bez_poprawy += 1
             if iteracje_bez_poprawy > aspiracja_iter:
-                print('kryterium aspiracji')
+                print("kryterium aspiracji")
                 # Kryterium aspiracji
                 sasiedztwo = min(lista_tabu, key=funkcja_celu)
                 iteracje_bez_poprawy = 0
@@ -263,21 +268,27 @@ def tabu_search(
 
         lista_tabu.append(sasiedztwo)
         aktualne_rozwiazanie = sasiedztwo
-        
+
         # Zapisz wartość funkcji celu najlepszego rozwiązania w tej iteracji
         historia_funkcji_celu.append(funkcja_celu(najlepsze_rozwiazanie))
 
     # Tworzenie wykresu
     plt.figure(figsize=(10, 6))
-    plt.plot(range(max_iter), historia_funkcji_celu, marker='o', linestyle='-', color='b')
+    plt.plot(
+        range(max_iter), historia_funkcji_celu, marker="o", linestyle="-", color="b"
+    )
     plt.title("Wartość funkcji celu najlepszego rozwiązania w każdej iteracji")
     plt.xlabel("Numer iteracji")
     plt.ylabel("Wartość funkcji celu")
     plt.grid(True)
-    plt.show()
-    
+
+    # Zapis wykresu do pliku
+    plt.savefig("wykresy/wykres.jpg", format="jpg")
+    plt.close()  # Zamknięcie figury, aby zwolnić zasoby
+
     print(start, funkcja_celu(start), "\n")
     return najlepsze_rozwiazanie
+
 
 lista_sasiedztwa_enum = stworz_format_tabu(baza_danych.lista_sasiedztwa_enum)
 stacja_pocz = "Balin"
