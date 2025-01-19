@@ -1,5 +1,5 @@
 from PyQt5.QtGui import QPalette, QColor, QPixmap
-from PyQt5.QtWidgets import QPushButton, QComboBox, QWidget, QLabel, QStackedWidget, QApplication, QHBoxLayout, QVBoxLayout, QListWidget, QLineEdit
+from PyQt5.QtWidgets import QPushButton, QComboBox, QWidget, QLabel, QStackedWidget, QApplication, QHBoxLayout, QVBoxLayout, QListWidget, QListWidgetItem, QLineEdit
 from PyQt5.QtCore import Qt, QSize
 from dikstra import tabu_search, lista_sasiedztwa_enum
 import sys
@@ -32,6 +32,8 @@ class MenuWindow(QWidget):
         self.maxIter.setFixedSize(90, 30)
         self.tabuLen = QLineEdit(); self.tabuLen.setPlaceholderText('Długość tabu')
         self.tabuLen.setFixedSize(90, 30)
+        self.aspIter = QLineEdit(); self.aspIter.setPlaceholderText('Kryt. aspiracji')
+        self.aspIter.setFixedSize(90, 30)
 
         self.b1 = QPushButton('Szukaj'); self.b1.setStyleSheet('font-size: 30px')
         self.b1.clicked.connect(self.started)
@@ -41,10 +43,13 @@ class MenuWindow(QWidget):
         menuLayout.addWidget(self.endPoint)
         menuLayout.addWidget(self.maxIter)
         menuLayout.addWidget(self.tabuLen)
+        menuLayout.addWidget(self.aspIter)
         menuLayout.addWidget(self.b1)
 
 
-        self.resPath = QListWidget(); self.resPath.setMinimumSize(500, 200)
+        self.resPath = QListWidget(); self.resPath.setStyleSheet('font-size: 25px')
+        self.resPath.setMinimumSize(500, 200)
+        self.resPath.setEnabled(False)
         self.iterImage = QLabel()
         resultImage = QPixmap('tlo.png')
         self.iterImage.setPixmap(resultImage)
@@ -60,28 +65,24 @@ class MenuWindow(QWidget):
         start = self.startPoint.currentText()
         end = self.endPoint.currentText()
         maxIter = int(self.maxIter.text())
-        tabuLen = int(self.maxIter.text())
-        FinalPath = tabu_search(start, end, lista_sasiedztwa_enum, max_iter=maxIter, dlugosc_tabu=tabuLen)
+        tabuLen = int(self.tabuLen.text())
+        aspIter = int(self.aspIter.text())
+        finalPath = tabu_search(start, end, lista_sasiedztwa_enum, max_iter=maxIter, dlugosc_tabu=tabuLen, aspiracja_iter = aspIter)
+        # finalPath = tabu_search("Balin", 'Kraków Łobzów', lista_sasiedztwa_enum, max_iter=50, dlugosc_tabu=10, aspiracja_iter = 10)
+        self.resPath.clear()
+        self.resPath.insertItem(0, '')
+        for row, station in enumerate(finalPath, 1):
+            item = QListWidgetItem(station[0])
+            item.setTextAlignment(Qt.AlignCenter)
+            self.resPath.insertItem(row, item)
+            if station == finalPath[-1]:
+                item = QListWidgetItem(station[1])
+                item.setTextAlignment(Qt.AlignCenter)
+                self.resPath.insertItem(row+1, item)
+
+
         resultImage = QPixmap('wykres.jpg')
         self.iterImage.setPixmap(resultImage)
-
-
-        '''
-        game = ResultWindow(FinalPath, IterImage)
-        win.addWidget(game)
-        win.setCurrentIndex(win.currentIndex()+1)
-
-
-class ResultWindow(QWidget):
-    def __init__(self, FinalPath, IterImage):
-        super().__init__()
-        self.FinalPath
-        self.initBody()
-    def initBody(self):
-        resultLayout = QHBoxLayout()
-        resultLayout.setAlignment(Qt.AlignCenter)
-        self.label = QLabel(self.FinalPath)
-'''
 
 
 if __name__ == '__main__':
