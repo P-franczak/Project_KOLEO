@@ -1,11 +1,11 @@
 from PyQt5.QtGui import QPalette, QColor, QPixmap
-from PyQt5.QtWidgets import QPushButton, QComboBox, QWidget, QLabel, QStackedWidget, QApplication, QHBoxLayout, QVBoxLayout, QListWidget
+from PyQt5.QtWidgets import QPushButton, QComboBox, QWidget, QLabel, QStackedWidget, QApplication, QHBoxLayout, QVBoxLayout, QListWidget, QLineEdit
 from PyQt5.QtCore import Qt, QSize
-from polaczone import tabu_search, lista_sasiedztwa_enum
+from dikstra import tabu_search, lista_sasiedztwa_enum
 import sys
 import os
 
-from przejazdy import Stacja
+from baza_danych import mapa_stacji, Stacja
 
 class MenuWindow(QWidget):
     def __init__(self):
@@ -22,12 +22,16 @@ class MenuWindow(QWidget):
         self.label = QLabel('Wyszukaj trase'); self.label.setStyleSheet('font-size: 30px')
         self.label.setAlignment(Qt.AlignCenter)
 
-        self.startPoint = QComboBox(); self.startPoint.addItems(Stacja.__members__.keys())
+        self.startPoint = QComboBox(); self.startPoint.addItems(mapa_stacji.values())
         self.startPoint.setStyleSheet('font-size: 18px')
         self.startPoint.setMinimumSize(160, 20)
-        self.endPoint = QComboBox(); self.endPoint.addItems(Stacja.__members__.keys())  
+        self.endPoint = QComboBox(); self.endPoint.addItems(mapa_stacji.values())  
         self.endPoint.setStyleSheet('font-size: 18px') 
         self.endPoint.setMinimumSize(160, 20) 
+        self.maxIter = QLineEdit(); self.maxIter.setPlaceholderText('Limit iteracji')
+        self.maxIter.setFixedSize(90, 30)
+        self.tabuLen = QLineEdit(); self.tabuLen.setPlaceholderText('Długość tabu')
+        self.tabuLen.setFixedSize(90, 30)
 
         self.b1 = QPushButton('Szukaj'); self.b1.setStyleSheet('font-size: 30px')
         self.b1.clicked.connect(self.started)
@@ -35,6 +39,8 @@ class MenuWindow(QWidget):
         menuLayout.addWidget(self.label)
         menuLayout.addWidget(self.startPoint)
         menuLayout.addWidget(self.endPoint)
+        menuLayout.addWidget(self.maxIter)
+        menuLayout.addWidget(self.tabuLen)
         menuLayout.addWidget(self.b1)
 
 
@@ -43,8 +49,8 @@ class MenuWindow(QWidget):
         resultImage = QPixmap('tlo.png')
         self.iterImage.setPixmap(resultImage)
         self.iterImage.setScaledContents(True)
-        resultLayout.addWidget(self.resPath, stretch = 1)
-        resultLayout.addWidget(self.iterImage, stretch = 1)
+        resultLayout.addWidget(self.resPath)
+        resultLayout.addWidget(self.iterImage)
         
         vertLayout.addLayout(menuLayout)
         vertLayout.addLayout(resultLayout)
@@ -53,10 +59,11 @@ class MenuWindow(QWidget):
     def started(self):
         start = self.startPoint.currentText()
         end = self.endPoint.currentText()
-        FinalPath = tabu_search(start, end, lista_sasiedztwa_enum, max_iter=50, dlugosc_tabu=10)
-        resultImage = QPixmap('obrazek.png')
+        maxIter = int(self.maxIter.text())
+        tabuLen = int(self.maxIter.text())
+        FinalPath = tabu_search(start, end, lista_sasiedztwa_enum, max_iter=maxIter, dlugosc_tabu=tabuLen)
+        resultImage = QPixmap('wykres.jpg')
         self.iterImage.setPixmap(resultImage)
-        
 
 
         '''
