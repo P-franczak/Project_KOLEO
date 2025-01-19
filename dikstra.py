@@ -234,7 +234,7 @@ def generuj_sasiedztwo(rozwiazanie, lista_sasiedztwa):
 
 # Algorytm Tabu Search
 def tabu_search(
-    stacja_pocz, stacja_konc, lista_sasiedztwa, max_iter=100, dlugosc_tabu=10
+    stacja_pocz, stacja_konc, lista_sasiedztwa, max_iter=100, dlugosc_tabu=10, 
 ):
     rozwiazanie_startowe, lista_stacji = znajdz_rozwiazanie_startowe(
         stacja_pocz, stacja_konc, lista_sasiedztwa
