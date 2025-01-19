@@ -1,6 +1,7 @@
-from PyQt5.QtGui import QIcon, QPalette, QColor
-from PyQt5.QtWidgets import QPushButton, QComboBox, QWidget, QLabel, QLineEdit, QStackedWidget, QApplication, QHBoxLayout, QVBoxLayout, QGridLayout,  QSizePolicy
-from PyQt5.QtCore import Qt, pyqtSignal, QSize
+from PyQt5.QtGui import QPalette, QColor, QPixmap
+from PyQt5.QtWidgets import QPushButton, QComboBox, QWidget, QLabel, QStackedWidget, QApplication, QHBoxLayout, QVBoxLayout
+from PyQt5.QtCore import Qt, QSize
+from polaczone import tabu_search, lista_sasiedztwa_enum
 import sys
 import os
 
@@ -14,6 +15,8 @@ class MenuWindow(QWidget):
     
     def initBody(self):
         vertLayout = QVBoxLayout()
+        menuLayout = QHBoxLayout()
+        resultLayout = QHBoxLayout()
         vertLayout.setAlignment(Qt.AlignCenter)
 
         self.label = QLabel('Wyszukaj trase'); self.label.setStyleSheet('font-size: 30px')
@@ -29,17 +32,49 @@ class MenuWindow(QWidget):
         self.b1 = QPushButton('Szukaj'); self.b1.setStyleSheet('font-size: 30px')
         self.b1.clicked.connect(self.started)
         
-        vertLayout.addWidget(self.label)
-        vertLayout.addWidget(self.startPoint)
-        vertLayout.addWidget(self.endPoint)
-        vertLayout.addWidget(self.b1)
+        menuLayout.addWidget(self.label)
+        menuLayout.addWidget(self.startPoint)
+        menuLayout.addWidget(self.endPoint)
+        menuLayout.addWidget(self.b1)
+
+
+        self.resPath = QLabel()
+        self.iterImage = QLabel()
+        resultImage = QPixmap('tlo.png')
+        self.iterImage.setPixmap(resultImage)
+        self.iterImage.setScaledContents(True)
+        resultLayout.addWidget(self.label)
+        resultLayout.addWidget(self.iterImage)
+        
+        vertLayout.addLayout(menuLayout)
+        vertLayout.addLayout(resultLayout)
 
         self.setLayout(vertLayout)
     def started(self):
         start = self.startPoint.currentText()
         end = self.endPoint.currentText()
-        pass
+        FinalPath = tabu_search(start, end, lista_sasiedztwa_enum, max_iter=50, dlugosc_tabu=10)
+        resultImage = QPixmap('obrazek.png')
+        self.iterImage.setPixmap(resultImage)
+        
 
+
+        '''
+        game = ResultWindow(FinalPath, IterImage)
+        win.addWidget(game)
+        win.setCurrentIndex(win.currentIndex()+1)
+
+
+class ResultWindow(QWidget):
+    def __init__(self, FinalPath, IterImage):
+        super().__init__()
+        self.FinalPath
+        self.initBody()
+    def initBody(self):
+        resultLayout = QHBoxLayout()
+        resultLayout.setAlignment(Qt.AlignCenter)
+        self.label = QLabel(self.FinalPath)
+'''
 
 
 if __name__ == '__main__':
