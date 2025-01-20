@@ -5,31 +5,63 @@ from enum import Enum
 import baza_danych
 
 
-def stworz_format_tabu(lista_sasiedztwa_enum):
+def stworz_format_tabu(lista_sasiedztwa_enum, mapa_stacji):
     """
-    Zamienia oryginalny słownik (Stacja -> [[StacjaDocelowa, nr_pociagu, godz_odjazdu], ...])
-    na słownik { "NazwaStacji": [ [start, end, czas_przejazdu, nr_pociagu], ... ] }
-    gdzie 'start' i 'end' to stringi z nazwą stacji, a czas_przejazdu to np. stała = 5.
+    1. Grupuje wszystkie wpisy (stacja_z, stacja_do, godz_odjazdu) wg nr_pociągu.
+    2. Dla każdego pociągu sortuje wpisy rosnąco po godz_odjazdu.
+    3. Oblicza różnicę (w minutach) względem poprzedniego wystąpienia tego samego pociągu.
+    4. Zwraca słownik: nazwa_stacji_początkowej -> list[list stacja_z_str, stacja_do_str, różnica_czasu, nr_pociągu].
     """
+    # ------- KROK 1: Przerzucenie wszystkiego do edges_by_train -------
+    edges_by_train = defaultdict(list)
+    
+    for stacja_z_enum, edges in lista_sasiedztwa_enum.items():
+        for stacja_do_enum, nr_pociagu, godz_odjazdu in edges:
+            # Dodaj wpis do edges_by_train[nr_pociagu]
+            edges_by_train[nr_pociagu].append((stacja_z_enum, stacja_do_enum, godz_odjazdu))
+
+    # Struktura docelowa
     new_lista = defaultdict(list)
 
-    for stacja_z, edges in lista_sasiedztwa_enum.items():
-        stacja_z_str = baza_danych.mapa_stacji[stacja_z]
-        for stacja_do_enum, nr_pociagu, godz_odjazdu in edges:
-            stacja_do_str = baza_danych.mapa_stacji[stacja_do_enum]
-            # Na potrzeby algorytmu przyjmujemy np. stały czas = 5
-            czas_przejazdu = 5
+    # Funkcja pomocnicza do parsowania "HH:MM" na liczbę minut
+    def parse_time(hhmm):
+        hh, mm = hhmm.split(':')
+        return int(hh) * 60 + int(mm)
 
-            new_lista[stacja_z_str].append(
-                [
-                    stacja_z_str,  # stacja początkowa (string)
-                    stacja_do_str,  # stacja docelowa (string)
-                    czas_przejazdu,  # na razie stały
-                    nr_pociagu,
-                ]
-            )
+    # ------- KROK 2 i 3: Dla każdego pociągu sortujemy i obliczamy różnice -------
+    for nr_pociagu, edges_list in edges_by_train.items():
+        # Sortuj wg godziny odjazdu
+        edges_list.sort(key=lambda x: parse_time(x[2]))
 
-    # Konwertuj defaultdict na zwykły dict
+        poprzedni_czas = None
+
+        # Iterujemy po posortowanych wpisach
+        for (stacja_z_enum, stacja_do_enum, godz_odjazdu) in edges_list:
+            # Parsowanie godziny
+            obecny_czas = parse_time(godz_odjazdu)
+
+            if poprzedni_czas is None:
+                # Pierwszy przejazd tego pociągu
+                roznica = 0
+            else:
+                # Różnica względem poprzedniego wystąpienia tego samego pociągu
+                roznica = obecny_czas - poprzedni_czas
+
+            # Uaktualniamy poprzedni_czas
+            poprzedni_czas = obecny_czas
+
+            # ------- KROK 4: Zapis do new_lista -------
+            stacja_z_str = mapa_stacji[stacja_z_enum]
+            stacja_do_str = mapa_stacji[stacja_do_enum]
+
+            new_lista[stacja_z_str].append([
+                stacja_z_str,
+                stacja_do_str,
+                roznica,      # różnica czasu względem poprzedniej stacji w tym samym pociągu
+                nr_pociagu
+            ])
+
+    # Konwersja defaultdict na zwykły dict
     return dict(new_lista)
 
 
@@ -299,4 +331,4 @@ def tabu_search(
     return najlepsze_rozwiazanie, funkcja_celu(najlepsze_rozwiazanie)
 
 
-lista_sasiedztwa_enum = stworz_format_tabu(baza_danych.lista_sasiedztwa_enum)
+lista_sasiedztwa_enum = stworz_format_tabu(baza_danych.lista_sasiedztwa_enum, baza_danych.mapa_stacji)

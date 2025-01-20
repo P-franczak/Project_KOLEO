@@ -68,7 +68,6 @@ class MenuWindow(QWidget):
         tabuLen = int(self.tabuLen.text())
         aspIter = int(self.aspIter.text())
         finalPath, finalValue = tabu_search(start, end, lista_sasiedztwa_enum, max_iter=maxIter, dlugosc_tabu=tabuLen, aspiracja_iter = aspIter)
-        #finalPath, finalValue = tabu_search("Balin", 'Kraków Łobzów', lista_sasiedztwa_enum, max_iter=50, dlugosc_tabu=10, aspiracja_iter = 10)
         self.resPath.clear()
         self.resPath.addItem('')
         for row, station in enumerate(finalPath):

@@ -77,10 +77,6 @@ mapa_stacji = {
 
 }
 
-# -----------------------------
-# 2. Oryginalna struktura kolejowa
-#    (słownik: Stacja -> lista [StacjaDocelowa, nr_pociągu, godz_odjazdu])
-# -----------------------------
 lista_sasiedztwa_enum = {st: [] for st in Stacja}
 
 # Pociąg 1
