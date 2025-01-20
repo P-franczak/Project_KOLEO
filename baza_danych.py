@@ -36,9 +36,7 @@ class Stacja(Enum):
     Kraków_Bronowice = 31
     Kraków_Łobzów = 32
     Kraków_Główny = 33
-    Kraków_Płaszów = 34
-    Tarnów = 35
-    Dębica = 36
+
 
 
 mapa_stacji = {
@@ -76,9 +74,7 @@ mapa_stacji = {
     Stacja.Kraków_Bronowice: "Kraków Bronowice",
     Stacja.Kraków_Łobzów: "Kraków Łobzów",
     Stacja.Kraków_Główny: "Kraków Główny",
-    Stacja.Kraków_Płaszów: "Kraków Płaszów",
-    Stacja.Tarnów: "Tarnów",
-    Stacja.Dębica: "Dębica",
+
 }
 
 # -----------------------------
