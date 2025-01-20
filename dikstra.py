@@ -43,7 +43,7 @@ def funkcja_celu(trasa):
 
 
 # Szukanie rozwiązania startowego
-def znajdz_rozwiazanie_startowe(stacja_pocz, stacja_konc, lista_sasiedztwa):
+def znajdz_rozwiazanie_startowe(stacja_pocz, stacja_konc, lista_sasiedztwa, iteration=100):
     lista1 = []  # [stacja z, stacja do, godzina odjazdu, czas jazdy, nr pociągu]
     lista2 = []
     odwiedzone1 = set([stacja_pocz])
@@ -104,7 +104,12 @@ def znajdz_rozwiazanie_startowe(stacja_pocz, stacja_konc, lista_sasiedztwa):
             break
 
         if not mozliwi_sasiedzi1 and not mozliwi_sasiedzi2:
-            return (0, 0)
+            if iteration > 0:
+                return znajdz_rozwiazanie_startowe(
+                    stacja_pocz, stacja_konc, lista_sasiedztwa, iteration - 1
+                )  
+            else:
+                return (0, 0)
 
     przeciecie_stacja = przeciecie.pop()
     idx1 = next(i for i, stacja in enumerate(lista1) if stacja[1] == przeciecie_stacja)
